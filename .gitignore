@@ -1,0 +1,8 @@
+# vscode
+.vscode
+
+# Python
+.pyc
+
+# Dotnet core
+bin/
