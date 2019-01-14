@@ -68,7 +68,7 @@ apt-get install -y \
     curl \
     software-properties-common
 
-if [ -x "$(command -v docker)" ]; then
+if ! [ -x "$(command -v docker)" ]; then
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
     add-apt-repository \
@@ -81,9 +81,10 @@ if [ -x "$(command -v docker)" ]; then
 
     groupadd docker
 
-    usermod -aG docker $USER
+    usermod -aG docker $username
 fi
 
+usermod -aG docker $username
 
 # Install the rest of the dependencies
 
@@ -109,3 +110,19 @@ apt-get update && apt-get install -y \
 
 # Setup ownership of the /ssd drive
 chown -R ${username}:${username} /ssd
+
+# Add $username to the sudo list
+usermod -aG sudo $username
+
+# Set all default nvidia usernames to the same password passed.
+echo nvidia:${password} | sudo chpasswd
+echo ubuntu:${password} | sudo chpasswd
+
+# Disable auto-login for the nvidia account
+sed -i '2d' /etc/lightdm/lightdm.conf.d/50-nvidia.conf 
+
+# Delete the nvidia user
+userdel -r -f nvidia
+
+# Reboot
+reboot
