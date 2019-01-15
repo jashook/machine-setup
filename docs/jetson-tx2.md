@@ -12,7 +12,7 @@ In order to use docker, the OS needs to be updated to what is provided in JetPac
 
 1. Remotely login as ubuntu@ip
 
-Note that the following will except the SSD to be attached at /dev/sda, if there are multiple drives, or the SSD is disconnected it will not work as expected.
+Note that the following will expect the SSD to be attached at /dev/sda, if there are multiple drives or the SSD is disconnected, it will not work as expected.
 
 ```sh
 curl https://github.com/jashook/machine-setup/blob/master/src/jetson-tx2/setup.sh -o setup.sh
